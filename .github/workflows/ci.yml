@@ -29,7 +29,11 @@ env:
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v3
       - name: Check license header
@@ -52,12 +56,13 @@ jobs:
 
   unittest:
     name: Unit tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     strategy:
       fail-fast: false
       matrix:
         java: [8, 11, 17, 21]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
     steps:
@@ -85,12 +90,13 @@ jobs:
 
   zk-compatibility-test:
     name: ${{ matrix.zookeeper }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     strategy:
       fail-fast: false
       matrix:
         zookeeper: [curator-test-zk38, curator-test-zk37, curator-test-zk36, curator-test-zk35]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
     steps:
