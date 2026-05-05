@@ -93,10 +93,10 @@ public class TestWatchesBuilder extends CuratorTestBase {
     @Test
     public void testRemoveCuratorDefaultWatcher() throws Exception {
         Timing timing = new Timing();
-        CuratorFramework client = CuratorFrameworkFactory.builder()
-                .connectString(server.getConnectString())
-                .retryPolicy(new RetryOneTime(1))
-                .build();
+        CuratorFramework client = CuratorFrameworkFactory.newClient(
+                 .connectString(server.getConnectString())
+                 .retryPolicy(new RetryOneTime(1))
+                 .build();
         try {
             client.start();
 
